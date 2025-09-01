@@ -1,3 +1,32 @@
+//! A Rust cross-platform userspace driver for interacting with the Huawei EnVizion 360° Camera (Huawei CV60).
+//! 
+//! Tested on Windows and macOS. Should work on Linux as well. 
+//! This library uses the [nusb] library.
+//! The camera itself uses a standard LibUSB driver, so it works out of the box on macOS, but you need to select the driver manually on Windows (WinUSB).
+//! 
+//! [nusb]: https://github.com/kevinmehall/nusb
+//! 
+//! ## Example
+//! 
+//! More examples are provided in the `examples/` folder.
+//! 
+//! ```no_run
+//! use hacam_lib_rs::{cam::HaCam, settings::PictureOrientation, util::CamUtil};
+//! 
+//! #[tokio::main]
+//! async fn main() -> Result<(), Box<dyn std::error::Error>> {
+//!     let mut cam = HaCam::new()?;
+//! 
+//!     cam.initialize_comm().await?;
+//! 
+//!     println!("Camera info: {:#?}", cam.get_camera_info().await?);
+//! 
+//!     cam.power_off().await?;
+//! 
+//!     Ok(())
+//! }
+//! ```
+
 /// Contains definitions of camera commands and some default values.
 pub mod consts;
 
