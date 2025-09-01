@@ -33,12 +33,14 @@ pub const TX_HEADER_MAGIC: [u8; 4] = *b"USBC";
 pub const DEFAULT_VID: u16 = 0x12D1;
 pub const DEFAULT_PID: u16 = 0x109B;
 
+/// Contains "SCSI" camera commands. (for initializing communication, sending keepalives, etc.)
 pub mod scsi {
     pub const OPEN_CONN_COMMAND: [i8; 16] = [122, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     pub const KEEP_ALIVE_COMMAND: [i8; 3] = [122, 3, -1];
     pub const APP_CONN_COMMAND: [i8; 16] = [122, 0, 2, 0, 0, 0, 0, 0, 1, 1, 0, 0, 44, 1, 0, 0];
 }
 
+/// Contains USB camera commands. (for transferring data, etc.)
 pub mod usb {
     pub const GET_CAMERA_STATUS: [i8; 16] = [122, 3, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     pub const GET_THERMAL_STATUS: [i8; 16] = [122, 3, 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
