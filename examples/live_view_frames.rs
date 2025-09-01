@@ -2,14 +2,14 @@ use hacam_lib_rs::{
     cam::HaCam,
     settings::{LiveViewResolution},
 };
-use image::{codecs::{jpeg::JpegEncoder}, ExtendedColorType, ImageEncoder};
+use image::{codecs::{png::PngEncoder}, ExtendedColorType, ImageEncoder};
 use openh264::formats::YUVSource as _;
 use tokio::time::sleep;
 use yuv::{yuv420_to_rgb, YuvPlanarImage, YuvRange, YuvStandardMatrix};
 use std::{fs::File, time::Duration};
 
 #[tokio::main]
-/// This example saves a few live view frames as JPG images.
+/// This example saves a few live view frames as PNG images.
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut cam = HaCam::new()?;
 
@@ -19,7 +19,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     cam.start_live_view(res).await?;
 
-    sleep(Duration::from_millis(500)).await;
+    sleep(Duration::from_millis(1000)).await;
 
     println!(
         "Live view started {}successfully!",
@@ -65,22 +65,22 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     YuvStandardMatrix::Bt601,
                 )?;
 
-                let mut out_file = File::create(format!("frame-{frame_cnt}.jpg"))?;
-                let jpg = JpegEncoder::new(&mut out_file);
-                jpg.write_image(&rgb_image, w as u32, h as u32, ExtendedColorType::Rgb8)?;
+                let mut out_file = File::create(format!("frame-{frame_cnt}.png"))?;
+                let png = PngEncoder::new(&mut out_file);
+                png.write_image(&rgb_image, w as u32, h as u32, ExtendedColorType::Rgb8)?;
             }
         }
 
         frame_cnt += 1;
 
-        if frame_cnt > 3 {
+        if frame_cnt > 5 {
             break;
         }
     }
 
-    cam.stop_recording().await?;
+    cam.stop_live_view().await?;
 
-    sleep(Duration::from_millis(500)).await;
+    sleep(Duration::from_millis(1000)).await;
 
     println!(
         "Live view ended {}successfully!",
