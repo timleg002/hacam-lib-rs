@@ -1,8 +1,13 @@
 [package]
 name = "hacam-lib-rs"
 version = "0.1.0"
+description = "A cross-platform userspace driver for interacting with the Huawei EnVizion 360 camera (Huawei CV60)"
+repository = "https://github.com/timleg002/hacam-lib-rs"
+keywords = ["async", "driver", "camera", "protocol", "computer-vision"]
+categories = ["computer-vision"]
 edition = "2024"
 license = "Apache-2.0 OR BSD-2-Clause"
+readme = "README.md"
 
 [dependencies]
 tokio = { version = "1.47.1", features = ["full"] }
