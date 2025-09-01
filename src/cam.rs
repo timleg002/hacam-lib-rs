@@ -92,9 +92,6 @@ impl HaCam {
     }
 
     /// Attempts to initialize communication to the camera.
-    ///
-    /// * `max_attempts` - Optionally specifies the max attempts before returning an error.
-    ///   By default uses the default_tries value from this struct.
     pub async fn initialize_comm(&mut self) -> CamResult<()> {
         for attempt_no in 0..self.default_tries {
             let out = self
